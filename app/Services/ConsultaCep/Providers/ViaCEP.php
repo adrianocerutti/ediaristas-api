@@ -1,10 +1,12 @@
 <?php
 
-namespace App\Services\ConsultaCep;
+namespace App\Services\ConsultaCep\Providers;
 
+use App\Services\ConsultaCep\ConsultaCEPInterface;
+use App\Services\ConsultaCep\EnderecoResponse;
 use Illuminate\Support\Facades\Http;
 
-class viaCEP
+class viaCEP implements ConsultaCEPInterface
 {
     /**
      * Buscar endereço utilizando a api do viaCEP
