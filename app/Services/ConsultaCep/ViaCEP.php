@@ -8,12 +8,12 @@ class viaCEP
 {
     /**
      * Buscar endereço utilizando a api do viaCEP
-     * 
+     *
      * @param string $cep
-     * @return void
+     * @return false|EnderecoResponse
      */
 
-    public function buscar(string $cep)
+    public function buscar(string $cep): false|EnderecoResponse
     {
         //transformar o cep no código do IBGE
         $resposta = Http::get("https://viacep.com.br/ws/$cep/json/");
@@ -28,6 +28,25 @@ class viaCEP
             return false;
         }
 
-        return $dados;
+        return $this->populaEnderecoResponse($dados);
+    }
+
+    /**
+     * formata a saída para endereço response
+     *
+     * @param array $dados
+     * @return EnderecoResponse
+     */
+    private function populaEnderecoResponse(array $dados): EnderecoResponse
+    {
+        return new EnderecoResponse(
+            cep: $dados['cep'],
+            logradouro: $dados['logradouro'],
+            complemento: $dados['complemento'],
+            bairro: $dados['bairro'],
+            localidade: $dados['localidade'],
+            uf: $dados['uf'],
+            ibge: $dados['ibge'],
+        );
     }
 }
