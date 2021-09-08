@@ -2,12 +2,13 @@
 
 namespace App\Models;
 
-use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
-use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class User extends Authenticatable
 {
@@ -46,9 +47,9 @@ class User extends Authenticatable
     /**
      * Define a relação com as cidades atendidas pelo(a) diarista
      *
-     * @return void
+     * @return BelongsToMany
      */
-    public function cidadesAtendidas()
+    public function cidadesAtendidas(): BelongsToMany
     {
         return $this->belongsToMany(Cidade::class, 'cidade_diarista');
     }
@@ -62,7 +63,7 @@ class User extends Authenticatable
 
     public function scopeDiarista(Builder $query): Builder
     {
-        return $query->where('tipo_usuario', '=', 2);
+        return $query->where('tipo_usuario', 2);
     }
 
     /**
@@ -77,7 +78,7 @@ class User extends Authenticatable
     {
         return $query->diarista()
                      ->whereHas('cidadesAtendidas', function($q) use ($codigoIbge) {
-                         $q->where('codigo_ibge', '=', $codigoIbge);
+                         $q->where('codigo_ibge', $codigoIbge);
                      });
     }
 
@@ -85,10 +86,10 @@ class User extends Authenticatable
      * Busca 6 diaristas por código do IBGE
      * 
      * @param integer $codigoIbge
-     * @return void
+     * @return Collection
      */
 
-    static public function diaristasDisponivelCidade(int $codigoIbge)
+    static public function diaristasDisponivelCidade(int $codigoIbge): Collection
     {
         return User::diaristasAtendeCidade($codigoIbge)->limit(6)->get();
     }

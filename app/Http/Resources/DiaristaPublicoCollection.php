@@ -8,6 +8,10 @@ class DiaristaPublicoCollection extends ResourceCollection
 {
     public static $wrap = 'diaristas';
 
+    /**
+     * Guardar a quantidade de diaristas -6
+     */
+
     private int $quantidadeDiaristas;
 
     public function __construct($resource, int $quantidadeDiaristas)
@@ -21,9 +25,9 @@ class DiaristaPublicoCollection extends ResourceCollection
      * Transform the resource collection into an array.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return array|\Illuminate\Contracts\Support\Arrayable|\JsonSerializable
+     * @return array
      */
-    public function toArray($request)
+    public function toArray($request): array
     {
         return [
             'diaristas' => DiaristaPublico::collection($this->collection),

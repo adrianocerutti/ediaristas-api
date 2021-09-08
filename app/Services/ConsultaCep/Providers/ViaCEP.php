@@ -2,9 +2,9 @@
 
 namespace App\Services\ConsultaCep\Providers;
 
-use App\Services\ConsultaCep\ConsultaCEPInterface;
-use App\Services\ConsultaCep\EnderecoResponse;
 use Illuminate\Support\Facades\Http;
+use App\Services\ConsultaCep\EnderecoResponse;
+use App\Services\ConsultaCep\ConsultaCEPInterface;
 
 class viaCEP implements ConsultaCEPInterface
 {
