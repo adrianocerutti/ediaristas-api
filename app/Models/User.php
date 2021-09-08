@@ -80,4 +80,25 @@ class User extends Authenticatable
                          $q->where('codigo_ibge', '=', $codigoIbge);
                      });
     }
+
+    /**
+     * Busca 6 diaristas por código do IBGE
+     * 
+     * @param integer $codigoIbge
+     * @return void
+     */
+
+    static public function diaristasDisponivelCidade(int $codigoIbge)
+    {
+        return User::diaristasAtendeCidade($codigoIbge)->limit(6)->get();
+    }
+    
+    /**
+     * Retorna a quantidade de diaristas por código do IBGE
+     */
+
+    static public function diaristasDisponivelCidadeTotal(int $codigoIbge): int
+    {
+        return User::diaristasAtendeCidade($codigoIbge)->count();
+    }
 }
