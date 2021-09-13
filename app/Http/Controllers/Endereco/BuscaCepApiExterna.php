@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Endereco;
 
-use Illuminate\Http\Request;
+use App\Http\Requests\CepRequest;
 use App\Http\Controllers\Controller;
 use Illuminate\Validation\ValidationException;
 use App\Services\ConsultaCep\ConsultaCEPInterface;
@@ -16,10 +16,10 @@ class BuscaCepApiExterna extends Controller
     /**
      * Retorna os dados de endereço a partir do CEP
      *
-     * @param Request $request
+     * @param CepRequest $request
      * @return array
      */
-    public function __invoke(Request $request): array
+    public function __invoke(CepRequest $request): array
     {
         $request->validate([
             'cep' => ['required', 'numeric']

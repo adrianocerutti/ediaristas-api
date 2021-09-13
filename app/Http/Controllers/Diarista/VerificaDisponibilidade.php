@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Diarista;
 
 use Illuminate\Http\Request;
+use App\Http\Requests\CepRequest;
 use Illuminate\Http\JsonResponse;
 use App\Http\Controllers\Controller;
 use App\Actions\Diarista\ObterDiaristasPorCEP;
@@ -16,15 +17,11 @@ class VerificaDisponibilidade extends Controller
     /**
      * Retorna a disponibilidade de diaristas para um CEP
      *
-     * @param Request $request
+     * @param CepRequest $request
      * @return JsonResponse
      */
-    public function __invoke(Request $request): JsonResponse
+    public function __invoke(CepRequest $request): JsonResponse
     {
-        $request->validate([
-            'cep' => ['required', 'numeric']
-        ]);
-
         [$diaristasCollection] = $this->obterDiaristasPorCEP->executar($request->cep);
 
         return resposta_padrao(
