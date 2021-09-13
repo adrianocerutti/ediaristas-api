@@ -2,12 +2,13 @@
 
 namespace App\Exceptions;
 
-use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
-use Illuminate\Validation\ValidationException;
 use Throwable;
+use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 
 class Handler extends ExceptionHandler
 {
+    use ApiHandler;
+
     /**
      * A list of the exception types that are not reported.
      *
@@ -51,13 +52,7 @@ class Handler extends ExceptionHandler
     public function render($request, Throwable $e)
     {
         if ($request->is('api/*')) {
-            if($e instanceof ValidationException) {
-                return response()->json([
-                    "status" => 400,
-                    "code" => "validation_error",
-                    "message" => "Erro de validação dos dados enviados"
-                ] + $e->errors(), 400);
-            }
+            return $this->getJsonException($e);
         }
 
         return parent::render($request, $e);
