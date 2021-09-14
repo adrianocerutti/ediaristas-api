@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use App\Services\ConsultaCep\Providers\viaCEP;
+use Illuminate\Http\Resources\Json\JsonResource;
 use App\Services\ConsultaCep\ConsultaCEPInterface;
 
 class AppServiceProvider extends ServiceProvider
@@ -27,6 +28,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        JsonResource::withoutWrapping();
     }
 }
