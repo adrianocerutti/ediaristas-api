@@ -20,7 +20,13 @@ class User extends Authenticatable
      * @var string[]
      */
     protected $fillable = [
-        'name',
+        'nome_completo',
+        'cpf',
+        'nascimento',
+        'foto_documento',
+        'telefone',
+        'tipo_usuario',
+        'chave_pix',
         'email',
         'password',
     ];
@@ -56,7 +62,7 @@ class User extends Authenticatable
 
     /**
      * Escopo que filtra os(as) diaristas
-     * 
+     *
      * @param Builder $query
      * @return Builder
      */
@@ -68,7 +74,7 @@ class User extends Authenticatable
 
     /**
      * Escopo que filtra diaristas por código do IBGE
-     * 
+     *
      * @param Builder $query
      * @param integer $codigoIbge
      * @return Builder
@@ -84,7 +90,7 @@ class User extends Authenticatable
 
     /**
      * Busca 6 diaristas por código do IBGE
-     * 
+     *
      * @param integer $codigoIbge
      * @return Collection
      */
@@ -93,7 +99,7 @@ class User extends Authenticatable
     {
         return User::diaristasAtendeCidade($codigoIbge)->limit(6)->get();
     }
-    
+
     /**
      * Retorna a quantidade de diaristas por código do IBGE
      */
