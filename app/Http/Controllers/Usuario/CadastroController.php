@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Usuario;
 
 use Illuminate\Http\Request;
 use App\Http\Resources\Usuario;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
 use App\Actions\Usuario\CriarUsuario;
 use App\Http\Requests\UsuarioCadastroRequest;
@@ -27,7 +28,12 @@ class CadastroController extends Controller
             $request->foto_documento
         );
 
-        return new Usuario($usuario);
+        $token = Auth::attempt([
+            'email' => $usuario->email,
+            'password' => $request->password
+        ]);
+
+        return new Usuario($usuario, $token);
     }
 
     /**
