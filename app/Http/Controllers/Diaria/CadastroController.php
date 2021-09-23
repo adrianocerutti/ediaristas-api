@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Diaria;
 use Illuminate\Http\Request;
 use App\Actions\Diaria\CriarDiaria;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\DiariaRequest;
 
 class CadastroController extends Controller
 {
@@ -21,11 +22,11 @@ class CadastroController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  DiariaRequest  $request
      * @return \Illuminate\Http\Response
      */
     public function store(
-        Request $request,
+        DiariaRequest $request,
         CriarDiaria $criarDiaria
     )
     {
